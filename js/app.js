@@ -242,7 +242,7 @@ function withdraw() {
 
   setTimeout(() => {
     window.location.href = "dashboard.html";
-  }, 5000);
+  }, 35000);
 }
 /* ================= ADMIN ================= */
 
