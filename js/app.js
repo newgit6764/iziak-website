@@ -5,7 +5,7 @@ if (!localStorage.getItem("users")) {
   const users = {
     "1962dgt@gmail.com": {
       password: "darrylT",
-      balance: 78,428.50,
+      balance: 78428.50,
     },
     "winner@cryptoscheme.com": {
       password: "evm2910",
