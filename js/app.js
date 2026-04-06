@@ -93,7 +93,7 @@ function renderPortfolio(data) {
   data.forEach(item => {
     table.innerHTML += `
       <tr>
-        <td>${item.coin}</td>
+        <td>${item.name}</td>
         <td>${item.amount}</td>
       </tr>
     `;
@@ -102,7 +102,7 @@ function renderPortfolio(data) {
 
 function sortByName() {
   const sorted = [...window.portfolioData].sort((a, b) =>
-    a.coin.localeCompare(b.coin)
+    a.name.localeCompare(b.name)
   );
   renderPortfolio(sorted);
 }
@@ -130,7 +130,7 @@ function renderHistory(data) {
     table.innerHTML += `
       <tr>
         <td>${tx.type}</td>
-        <td>${tx.coin}</td>
+        <td>${tx.name}</td>
         <td>${tx.amount}</td>
         <td>${tx.status}</td>
       </tr>
@@ -156,7 +156,7 @@ async function loadDeposit() {
     data.qr;
 }
 
-function deposit(amount, coin) {
+function deposit(amount, name) {
   const balance = parseFloat(localStorage.getItem("balance")) || 1000;
   const newBalance = balance + parseFloat(amount || 0);
   localStorage.setItem("balance", newBalance);
@@ -164,14 +164,14 @@ function deposit(amount, coin) {
   const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
   transactions.push({
     type: "Deposit",
-    coin: coin,
+    name: name,
     amount: parseFloat(amount),
     status: "Completed",
     timestamp: new Date().toISOString()
   });
   localStorage.setItem("transactions", JSON.stringify(transactions));
 
-  alert(`${amount} ${coin} deposited successfully!`);
+  alert(`${amount} ${name} deposited successfully!`);
 }
 
 /* ================= WITHDRAW ================= */
@@ -210,7 +210,7 @@ function withdraw() {
     id: Date.now(),
     user_id: email,
     type: "Withdraw",
-    coin: crypto,
+    name: crypto,
     amount: amount,
     status: "Pending",
     address: address,
@@ -246,7 +246,7 @@ function loadWithdrawals() {
         <tr>
           <td>${tx.id}</td>
           <td>${tx.user_id}</td>
-          <td>${tx.coin}</td>
+          <td>${tx.name}</td>
           <td>${tx.amount}</td>
           <td>${tx.status}</td>
           <td>
